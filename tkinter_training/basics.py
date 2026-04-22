@@ -23,6 +23,7 @@ window.iconphoto(True, icon)                                # window's icon
 
 window.config(background=BACKGROUND_COLOUR)                 # background colour
 
+
 # labels
 """
 # # ------- LABELS ------- (an area widget that hold texts and/or an image within a window)   https://www.tutorialspoint.com/python/tk_label.htm
@@ -248,6 +249,7 @@ for index in range(len(food)):
 
 # scale
 """
+# ------- SCALE -------
 def submit():
     print("The temperature: " + str(scale.get()) + " degrees C")
 
@@ -289,6 +291,119 @@ button.pack()
 
 # listboxes
 """
+# ------- LISTBOXES ------- (listing of selectable text items within it's own container)
+def submit():
+    # print("Your order: ", listbox.get(listbox.curselection()))      # works if selectmode jest dla jednego wyboru
+    food = []
+    for index in listbox.curselection():
+        food.insert(index, listbox.get(index))
+    
+    print("You have ordered: ")
+    for index in food:
+        print(index)
+
+def add():
+    listbox.insert(listbox.size(), entry_box.get())
+    listbox.config(height=listbox.size())           # adjust size dynamically
+
+def delete():
+    for index in reversed(listbox.curselection()):
+        listbox.delete(index)
+    # listbox.delete(listbox.curselection())          # works only for selectmode=single
+    listbox.config(height=listbox.size())           # adjust size dynamically
+
+
+listbox = Listbox(window,
+                  bg="#f7ffde",
+                  font=("Constantia", 35),
+                  width=12,
+                  selectmode=MULTIPLE
+                  )
+listbox.pack()
+
+listbox.insert(1, "pizza")
+listbox.insert(2, "pasta")
+listbox.insert(3, "garlic bread")
+listbox.insert(4, "soup")
+listbox.insert(5, "salad")
+
+listbox.config(height=listbox.size())           # adjust size dynamically
+
+entry_box = Entry(window)
+entry_box.pack()
+add_button = Button(window, text="add", command=add)
+add_button.pack()
+
+delete_button = Button(window, text="delete", command=delete)
+delete_button.pack()
+
+submit_button = Button(window, text="submit", command=submit)
+submit_button.pack()
+"""
+
+# messageboxes
+"""
+# ------- MESSAGEBOXES ------- 
+from tkinter import messagebox
+
+def click():
+    # messagebox.showinfo(title="Infomessage box", message="You are dumb")
+
+    # while True:
+    #     messagebox.showwarning(title="Warrning", message="You are an idiot")        # infinite warning box
+
+    # messagebox.showerror(title="error", message="You are an error")
+
+    # if messagebox.askokcancel(title="Ask ok cancel", message="do you want to do the thing?"):
+    #     print("you did the thing")
+    # else:
+    #     print("you did not do the thing")
+
+    # if messagebox.askretrycancel(title="ask ok cancel", message="do you want to retry the thing?"):
+    #     print("you did the thing")
+    # else:
+    #     print("you did not do the thing")
+
+    # if messagebox.askyesno(title="yes or no", message="do you like cake?"):
+    #     print("good")
+    # else:
+    #     print("what's wrong with you")
+
+    # answer = messagebox.askquestion(title="ask question", message="do you like pizza?")
+    # if answer == "yes":
+    #     print("good")
+    # else:
+    #     print("you need a doctor")
+
+    answer = messagebox.askyesnocancel(title="yes no cancel", message="do you like?", icon='warning')       # icons: info, error, warning
+    if answer == True:
+        print("you like")
+    elif answer == False:
+        print("you don't like")
+    else:
+        print("what")
+
+
+button = Button(window, command=click, text='click me')
+button.pack()
+"""
+
+# colorchooser
+"""
+# ------- COLORCHOOSER ------- 
+
+from tkinter import colorchooser
+
+def click():
+    color = colorchooser.askcolor()
+    color_hex = color[1]
+    window.config(bg=color_hex)                 # change background color
+    # window.config(bg=colorchooser.askcolor()[1])
+
+window = Tk()
+window.geometry("420x420")
+button = Button(text="CLICK ME", command=click)
+button.pack()
 """
 
 
